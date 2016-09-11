@@ -6,7 +6,7 @@ public class SphereController : MonoBehaviour
     public GameObject CubeReference;
     
     float Speed = 0.08f;
-    public Vector2 Distance;
+    
     Vector3 CubereRefPosition;
 
     public int Timer;
@@ -15,8 +15,8 @@ public class SphereController : MonoBehaviour
     
     void Start()
     {
-        //Dynamic Reference to our Cube/Player1 GameObject
-        //CubeReference = GameObject.Find("Cube");
+        //Reference to our Cube/Player1 GameObject
+        CubeReference = GameObject.Find("Cube");
         Timer = 1;
     }
 
@@ -30,7 +30,7 @@ public class SphereController : MonoBehaviour
     private void Movement()
     {
         //Sphere Tracks position of Player1 and follows
-        Vector3 CubereRefPosition = CubeReference.transform.position;
+        CubereRefPosition = CubeReference.transform.position;
         transform.position = Vector3.MoveTowards(transform.position, CubereRefPosition, Speed);
     }
     private void EnemyProximity()
@@ -38,12 +38,13 @@ public class SphereController : MonoBehaviour
         
 
         //Check Distance between player1 & Enemy
-        Distance.x = transform.position.x - CubereRefPosition.x;
-        Distance.y = transform.position.y - CubereRefPosition.y;
+        float x = transform.position.x - CubereRefPosition.x;
+        float y = transform.position.y - CubereRefPosition.y;
+        Vector2 distance = new Vector2(x,y);
 
         //If Occupying the same space as you, you've been eaten!!!
 
-        if (((Distance.x < 0.1f) && (Distance.x > -0.1f)) && ((Distance.y < 0.1f) && (Distance.y > -0.1f)))
+        if (((distance.x < 0.1f) && (distance.x > -0.1f)) && ((distance.y < 0.1f) && (distance.y > -0.1f)))
         {
             GameObject.Destroy(CubeReference);
             Debug.Log("You have been eaten!!!");
@@ -54,11 +55,11 @@ public class SphereController : MonoBehaviour
         //Spawn dublicates every 500 ticks
         if (Timer % 500 == 0)
         {
-            Vector3 RandomSpawn;
-            RandomSpawn.x = Random.Range(-6.1f, 6.1f);
-            RandomSpawn.y = Random.Range(-3.3f, 3.3f);
-            RandomSpawn.z = transform.position.z;
-            GameObject.Instantiate(this.gameObject, RandomSpawn, transform.rotation);
+            
+            float x = Random.Range(-6.1f, 6.1f);
+            float y = Random.Range(-3.3f, 3.3f);
+            float z = transform.position.z;
+            GameObject.Instantiate(this.gameObject, new Vector3(x, y, z), transform.rotation);
 
         }
         Timer++;
