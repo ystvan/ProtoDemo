@@ -18,6 +18,8 @@ public class CubeController : MonoBehaviour
 
     void Start()
     {
+        //Initialization
+
         Move = transform.position;
 
         LeftEdge = CamWidthX*-1;
@@ -30,6 +32,16 @@ public class CubeController : MonoBehaviour
 
      void Update()
     {
+        
+        TeleportCheck();
+        Movement();
+        BoundaryCheck();
+    }
+
+    
+
+    private void TeleportCheck()
+    {
         //Teleport
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -38,7 +50,7 @@ public class CubeController : MonoBehaviour
                 Teleport = 2f;
                 CoolCounter = 100;
             }
-            
+
         }
         else
         {
@@ -51,7 +63,10 @@ public class CubeController : MonoBehaviour
         {
             CoolCounter = 0;
         }
+    }
 
+    private void Movement()
+    {
         //Movement
         if (Input.GetKey(KeyCode.LeftArrow))
             Move.x -= Speed + Teleport;
@@ -65,20 +80,22 @@ public class CubeController : MonoBehaviour
         transform.position = Move;
     }
 
-    void LateUpdate()
+    private void BoundaryCheck()
     {
-        //Check if at the edge of screen and constraint movement is reached
+       
+            //Check if at the edge of screen and constraint movement is reached
 
-        if (transform.position.x < LeftEdge)
-            Move.x = LeftEdge;
-        if (transform.position.x > RightEdge)
-            Move.x = RightEdge;
-        if (transform.position.y < BottomEdge)
-            Move.y = BottomEdge;
-        if (transform.position.y > TopEdge)
-            Move.y = TopEdge;
+            if (transform.position.x < LeftEdge)
+                Move.x = LeftEdge;
+            if (transform.position.x > RightEdge)
+                Move.x = RightEdge;
+            if (transform.position.y < BottomEdge)
+                Move.y = BottomEdge;
+            if (transform.position.y > TopEdge)
+                Move.y = TopEdge;
 
-        transform.position = Move;
+            transform.position = Move;
+        
     }
 
 }
