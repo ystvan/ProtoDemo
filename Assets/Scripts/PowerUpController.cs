@@ -6,13 +6,13 @@ public class PowerUpController : MonoBehaviour
 
     GameObject CubeReference;
 
-    public int PowerUpMeter;
+    
     public int Timer = 1;
 
 	void Start()
 	{
         CubeReference = GameObject.Find("Cube");
-	    PowerUpMeter = 50; //Deafult bonus at startup
+	    
 	}
 
 	void Update()
@@ -50,10 +50,11 @@ public class PowerUpController : MonoBehaviour
         if (AtePowerUp())
         {
             GameObject.Destroy(gameObject);
-            PowerUpMeter += 100;
+            PowerUpManager.PowerUpMeter += 100;
+            Debug.Log(PowerUpManager.PowerUpMeter);
         }
 
-        if (Timer % 400 == 0)
+        if (Timer % 140 == 0)
         {
             GameObject.Destroy(gameObject);
         }
